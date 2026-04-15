@@ -103,6 +103,9 @@ body {
     .mañana { background: #28a745; }
     .tarde { background: #ff9800; }
     .noche { background: #673ab7; }
+    .btn-save{
+        margin-top: 1.rem;
+    }
 </style>
 
 </head>
@@ -123,6 +126,18 @@ body {
 <label>
   <input type="checkbox" id="cuatrimestral"> Viaje cuatrimestral
 </label>
+
+
+
+<!-- DIAS -->
+<div class="check-group">
+<label><input type="checkbox" name="dias" value="Lunes">Lunes</label>
+<label><input type="checkbox" name="dias" value="Martes">Martes</label>
+<label><input type="checkbox" name="dias" value="Miércoles">Miércoles</label>
+<label><input type="checkbox" name="dias" value="Jueves">Jueves</label>
+<label><input type="checkbox" name="dias" value="Viernes">Viernes</label>
+<label><input type="checkbox" name="dias" value="Sábado">Sábado</label>
+</div>
 
 <!-- IDA -->
 <label><input type="checkbox" id="checkIda"> Ida</label>
@@ -158,17 +173,7 @@ body {
 </select>
 </div>
 
-<!-- DIAS -->
-<div class="check-group">
-<label><input type="checkbox" name="dias" value="Lunes">Lunes</label>
-<label><input type="checkbox" name="dias" value="Martes">Martes</label>
-<label><input type="checkbox" name="dias" value="Miércoles">Miércoles</label>
-<label><input type="checkbox" name="dias" value="Jueves">Jueves</label>
-<label><input type="checkbox" name="dias" value="Viernes">Viernes</label>
-<label><input type="checkbox" name="dias" value="Sábado">Sábado</label>
-</div>
-
-<button>Guardar</button>
+<button class="btn-save">Guardar</button>
 </form>
 
 <p id="msg"></p>
