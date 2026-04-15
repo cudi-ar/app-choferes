@@ -200,7 +200,7 @@
         </div>
 
         <div class="card">
-            <button onclick="cargarViajes()">Actualizar</button>
+            <button onclick="cargarViajes()">Actualizar Tabla</button>
             <div id="listaViajes"></div>
         </div>
 
@@ -269,7 +269,7 @@
         }
 
         // CARRERAS
-        universidad.onchange = function () {
+        document.getElementById("universidad").onchange = function () {
 
             // cargar carreras
             carrera.innerHTML = "<option value=''>Elegir carrera</option>";
@@ -291,7 +291,7 @@
         }
 
         // FILTRAR DOCENTES
-        carrera.onchange = function () {
+        document.getElementById("carrera").onchange = function () {
 
             if (!DOCENTES.length) {
                 alert("Docentes todavía no cargaron, esperá un segundo...");
@@ -314,17 +314,19 @@
         };
 
         // PARADAS
-        turno.onchange = function () {
-            parada.innerHTML = "<option value=''>Parada</option>";
+document.getElementById("turno").onchange = function(){
 
-            (PARADAS[this.value] || []).forEach(p => {
-                parada.innerHTML += `<option>${p}</option>`;
-            });
-        };
+  let parada = document.getElementById("parada");
 
+  parada.innerHTML = "<option value=''>Parada</option>";
+
+  (PARADAS[this.value] || []).forEach(p=>{
+    parada.innerHTML += `<option>${p}</option>`;
+  });
+};
         // MOSTRAR BLOQUES
-        checkIda.onchange = () => idaDiv.style.display = checkIda.checked ? "block" : "none";
-        checkVuelta.onchange = () => vueltaDiv.style.display = checkVuelta.checked ? "block" : "none";
+        document.getElementById("checkIda").onchange = () => idaDiv.style.display = checkIda.checked ? "block" : "none";
+        document.getElementById("checkVuelta").onchange =() => vueltaDiv.style.display = checkVuelta.checked ? "block" : "none";
 
         // ROLES
         function esAdmin() {
