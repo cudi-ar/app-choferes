@@ -11,10 +11,12 @@ body {
   margin: 0;
   padding: 10px;
 }
+
 .container {
   max-width: 700px;
   margin: auto;
 }
+
 .card {
   background: white;
   border-radius: 12px;
@@ -22,13 +24,15 @@ body {
   margin-bottom: 15px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-select, input {
+
+select, input[type="text"] {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
   margin-bottom: 10px;
 }
+
 button {
   width: 100%;
   background: #2c7be5;
@@ -37,6 +41,34 @@ button {
   padding: 12px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.check-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.check-group label {
+  background: #f1f3f8;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top:10px;
+}
+
+td,th {
+  border:1px solid #ddd;
+  padding:6px;
+}
+
+th {
+  background:#2c7be5;
+  color:white;
 }
 </style>
 
@@ -55,31 +87,52 @@ button {
 <select id="carrera"></select>
 <select id="docente"></select>
 
+<label>
+  <input type="checkbox" id="cuatrimestral"> Viaje cuatrimestral
+</label>
+
+<!-- IDA -->
 <label><input type="checkbox" id="checkIda"> Ida</label>
 <div id="idaDiv" style="display:none">
 <select id="turno">
+<option value="">Turno</option>
 <option>Mañana</option>
 <option>Tarde</option>
 <option>Noche</option>
 </select>
+
 <select id="parada"></select>
 </div>
 
+<!-- VUELTA -->
 <label><input type="checkbox" id="checkVuelta"> Vuelta</label>
 
 <div id="vueltaDiv" style="display:none">
 <select id="turno_vuelta">
+<option value="">Turno</option>
 <option>Mañana</option>
 <option>Tarde</option>
 <option>Noche</option>
 </select>
+
 <select id="parada_vuelta">
+<option value="">Parada</option>
 <option>CUDI</option>
 <option>Liniers</option>
 <option>Combate</option>
 <option>Belgrano</option>
 <option>Vuelve por sus propios medios</option>
 </select>
+</div>
+
+<!-- DIAS -->
+<div class="check-group">
+<label><input type="checkbox" name="dias" value="Lunes">Lunes</label>
+<label><input type="checkbox" name="dias" value="Martes">Martes</label>
+<label><input type="checkbox" name="dias" value="Miércoles">Miércoles</label>
+<label><input type="checkbox" name="dias" value="Jueves">Jueves</label>
+<label><input type="checkbox" name="dias" value="Viernes">Viernes</label>
+<label><input type="checkbox" name="dias" value="Sábado">Sábado</label>
 </div>
 
 <button>Guardar</button>
@@ -105,14 +158,14 @@ button {
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyGFTMvbp_D32OgRPm3LvyiDA1BtzTTNQ_eqTGs7scXkkahVscmK7cwY3TbcaVvPJRe/exec"; // cambiá esto
+const API_URL = "https://script.google.com/macros/s/AKfycbyGFTMvbp_D32OgRPm3LvyiDA1BtzTTNQ_eqTGs7scXkkahVscmK7cwY3TbcaVvPJRe/exec";
 
 let SESSION = null;
 let DOCENTES = [];
 
-// ===== DATA LOCAL =====
+// 🔥 DATA LOCAL
 const DATA = {
-  "UNAHUR": ["Obstetricia", "Diseño Industrial", "Alimentos"],
+  "UNAHUR": ["Obstetricia","Diseño Industrial","Alimentos"],
   "UBA": ["FMED"],
   "UBA CBC": ["CBC"],
   "UNPAZ": ["Videojuegos"],
@@ -126,7 +179,7 @@ const PARADAS = {
   "Noche":["Belgrano","Combate","Liniers","Va por sus propios medios"]
 };
 
-// ===== LOGIN =====
+// LOGIN
 async function login(){
   let res = await fetch(API_URL,{
     method:"POST",
@@ -148,65 +201,83 @@ async function login(){
   }
 }
 
-// ===== UNIVERSIDADES =====
+// UNIVERSIDADES
 function cargarUniversidades(){
   universidad.innerHTML = "<option value=''>Elegir universidad</option>";
 
   for(let u in DATA){
-    universidad.innerHTML += `<option value="${u}">${u}</option>`;
+    universidad.innerHTML += `<option>${u}</option>`;
   }
 }
 
-// ===== CARRERAS =====
-universidad.addEventListener("change", function(){
+// CARRERAS
+universidad.onchange = function(){
 
+  // cargar carreras
   carrera.innerHTML = "<option value=''>Elegir carrera</option>";
 
-  let lista = DATA[this.value] || [];
-
-  lista.forEach(c=>{
-    carrera.innerHTML += `<option value="${c}">${c}</option>`;
+  (DATA[this.value] || []).forEach(c=>{
+    carrera.innerHTML += `<option>${c}</option>`;
   });
 
-  docente.innerHTML = "<option>Elegir docente</option>";
-});
+  // reset docente
+  docente.innerHTML = "<option value=''>Elegir docente</option>";
+};
 
-// ===== DOCENTES (API) =====
+// DOCENTES
 async function cargarDocentes(){
   let res = await fetch(API_URL+"?action=getDocentes");
   DOCENTES = await res.json();
+
+  console.log("DOCENTES cargados:", DOCENTES);
 }
 
-// ===== FILTRAR DOCENTES =====
-carrera.addEventListener("change", function(){
+// FILTRAR DOCENTES
+carrera.onchange = function(){
+
+  if(!DOCENTES.length){
+    alert("Docentes todavía no cargaron, esperá un segundo...");
+    return;
+  }
 
   docente.innerHTML = "<option value=''>Elegir docente</option>";
 
   DOCENTES
-    .filter(d => d.universidad === universidad.value && d.carrera === this.value)
+    .filter(d => 
+      d.universidad === universidad.value &&
+      d.carrera === carrera.value
+    )
     .forEach(d=>{
       docente.innerHTML += `
         <option value="${d.nombre}" data-tel="${d.telefono}">
           ${d.nombre}
         </option>`;
     });
-});
+};
 
-// ===== PARADAS =====
-turno.addEventListener("change", function(){
-
+// PARADAS
+turno.onchange = function(){
   parada.innerHTML = "<option value=''>Parada</option>";
 
   (PARADAS[this.value] || []).forEach(p=>{
     parada.innerHTML += `<option>${p}</option>`;
   });
-});
+};
 
-// ===== MOSTRAR BLOQUES =====
+// MOSTRAR BLOQUES
 checkIda.onchange = ()=> idaDiv.style.display = checkIda.checked ? "block":"none";
 checkVuelta.onchange = ()=> vueltaDiv.style.display = checkVuelta.checked ? "block":"none";
 
-// ===== VIAJES =====
+// ROLES
+function esAdmin(){
+  return SESSION && SESSION.rol === "admin";
+}
+
+function esChofer(){
+  return SESSION && SESSION.rol === "chofer";
+}
+
+// VIAJES COMPLETOS
 async function cargarViajes(){
 
   let res = await fetch(API_URL+"?action=obtenerViajes");
@@ -228,45 +299,61 @@ async function cargarViajes(){
         <th>Carrera</th>
         <th>Docente</th>
         <th>Ida</th>
-        <th>Horario</th>
-        <th>Auto</th>
+        <th>Horario Ida</th>
+        <th>Vuelta</th>
+        <th>Horario Vuelta</th>
+        <th>Auto Ida</th>
+        <th>Auto Vuelta</th>
+        ${esAdmin() ? "<th>Acciones</th>" : ""}
       </tr>`;
 
       lista.forEach(v=>{
 
-        let auto = SESSION?.rol==="chofer"
+        let autoIda = esChofer()
           ? `<td onclick="editarAuto('${v.fecha_viaje}','ida',this)">➕</td>`
           : `<td>${v.auto_ida || "---"}</td>`;
+
+        let autoVuelta = esChofer()
+          ? `<td onclick="editarAuto('${v.fecha_viaje}','vuelta',this)">➕</td>`
+          : `<td>${v.auto_vuelta || "---"}</td>`;
+
+        let acciones = esAdmin()
+          ? `<td>
+              <button onclick="editar('${v.fecha_viaje}')">Editar</button>
+              <button style="background:red" onclick="eliminar('${v.fecha_viaje}')">X</button>
+            </td>`
+          : "";
 
         html += `
         <tr>
           <td>${v.universidad}</td>
           <td>${v.carrera}</td>
           <td>${v.docente}</td>
-          <td>${v.parada || "-"}</td>
-          <td>${v.horario_ida || "-"}</td>
-          ${auto}
+          <td>${v.parada}</td>
+          <td>${v.horario_ida}</td>
+          <td>${v.parada_vuelta}</td>
+          <td>${v.horario_vuelta}</td>
+          ${autoIda}
+          ${autoVuelta}
+          ${acciones}
         </tr>`;
       });
 
       html += "</table>";
     }
-
   });
 
   listaViajes.innerHTML = html;
 }
 
-// ===== GUARDAR VIAJE =====
+// GUARDAR
 form.onsubmit = async e=>{
   e.preventDefault();
 
-  let diasSeleccionados = ["Lunes"]; // podés volver a agregar checkboxes después
+  let dias = [...document.querySelectorAll("input[name='dias']:checked")].map(x=>x.value);
 
-  let selectedDoc = docente.options[docente.selectedIndex];
-
-  if(!selectedDoc || !selectedDoc.value){
-    alert("Seleccioná docente");
+  if(!dias.length){
+    alert("Seleccioná días");
     return;
   }
 
@@ -275,17 +362,25 @@ form.onsubmit = async e=>{
     return;
   }
 
+  let doc = docente.options[docente.selectedIndex];
+
+  if(!doc || !doc.value){
+    alert("Seleccioná docente");
+    return;
+  }
+
   let data = {
     action:"guardarViaje",
     universidad: universidad.value,
     carrera: carrera.value,
-    docente_nombre: selectedDoc.value,
-    docente_telefono: selectedDoc.getAttribute("data-tel"),
+    docente_nombre: doc.value,
+    docente_telefono: doc.getAttribute("data-tel"),
     turno: turno.value,
     parada: parada.value,
     turno_vuelta: turno_vuelta.value,
     parada_vuelta: parada_vuelta.value,
-    dias: diasSeleccionados
+    cuatrimestral: cuatrimestral.checked,
+    dias: dias
   };
 
   await fetch(API_URL,{
@@ -295,13 +390,34 @@ form.onsubmit = async e=>{
 
   msg.innerText = "Guardado ✔";
   form.reset();
+  idaDiv.style.display="none";
+  vueltaDiv.style.display="none";
+
   cargarViajes();
 };
 
-// ===== PATENTE =====
+// ELIMINAR
+async function eliminar(id){
+  if(!esAdmin()){
+    alert("No autorizado");
+    return;
+  }
+
+  await fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify({
+      action:"eliminarViaje",
+      id
+    })
+  });
+
+  cargarViajes();
+}
+
+// PATENTE
 async function editarAuto(id,tipo,celda){
 
-  if(SESSION?.rol !== "chofer"){
+  if(!esChofer()){
     alert("Solo chofer");
     return;
   }
@@ -320,6 +436,15 @@ async function editarAuto(id,tipo,celda){
   });
 
   celda.innerText = patente;
+}
+
+function editar(id){
+  if(!esAdmin()){
+    alert("No autorizado");
+    return;
+  }
+
+  alert("Después hacemos modal de edición");
 }
 
 // INIT
