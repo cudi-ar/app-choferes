@@ -2,335 +2,355 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<style>
-body {
-      font-family: Arial;
-      background: #f5f7fb;
-      margin: 0;
-      padding: 10px;
-    }
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 10px;
+        }
 
-    .container {
-      max-width: 700px;
-      margin: auto;
-    }
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
 
-    select,
-    input[type="text"] {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-      font-size: 14px;
-      box-sizing: border-box;
-      height: 42px;
-    }
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            font-size: 14px;
+            box-sizing: border-box;
+            height: 42px;
+        }
 
-    input[type="checkbox"] {
-      transform: scale(1.1);
-      cursor: pointer;
-    }
+        input[type="checkbox"] {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
 
-    .checkbox-inline {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0;
-    }
+        .checkbox-inline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
 
-    .check-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom:10px;
-    }
+        .check-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
 
-    .check-group label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      background: #f1f3f8;
-      padding: 5px 10px;
-      border-radius: 6px;
-    }
+        .check-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #f1f3f8;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
 
-    button {
-      margin-top:10px;
-      width: 100%;
-      background: #2c7be5;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+        button {
+            margin-top: 10px;
+            width: 100%;
+            background: #2c7be5;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
 
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 6px;
-    }
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 6px;
+        }
 
-    th {
-      background: #2c7be5;
-      color: white;
-    }
+        th {
+            background: #2c7be5;
+            color: white;
+        }
 
-    .badge {
-      padding: 3px 6px;
-      border-radius: 6px;
-      color: white;
-      font-size: 12px;
-    }
+        .badge {
+            padding: 3px 6px;
+            border-radius: 6px;
+            color: white;
+            font-size: 12px;
+        }
 
-    .mañana { background: #28a745; }
-    .tarde { background: #ff9800; }
-    .noche { background: #673ab7; }
-    .btn-save{
-        margin-top: 1.rem;
-    }
-</style>
+        .mañana {
+            background: #28a745;
+        }
+
+        .tarde {
+            background: #ff9800;
+        }
+
+        .noche {
+            background: #673ab7;
+        }
+
+        .btn-save {
+            margin-top: 1.rem;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-<div class="card">
-<h2>Cargar viaje</h2>
+        <div class="card">
+            <h2>Cargar viaje</h2>
 
-<form id="form">
+            <p style="text-align:left; font-size:14px; color:#555;">
+                Complete este formulario para registrar su viaje semanal de remis.<br><br>
+                • Seleccione la universidad y carrera.<br>
+                • Ingrese sus datos.<br>
+                • Elija si realiza viaje de ida y/o vuelta.<br>
+                • Marque los días.<br>
+            </p>
 
-<select id="universidad"></select>
-<select id="carrera"></select>
-<select id="docente"></select>
+            <form id="form">
 
-<label>
-  <input type="checkbox" id="cuatrimestral"> Viaje cuatrimestral
-</label>
+                <select id="universidad"></select>
+                <select id="carrera"></select>
+                <select id="docente"></select>
 
+                <div class="checkbox-inline">
+                    <label>¿El viaje es cuatrimestral?</label>
+                    <input type="checkbox" name="cuatrimestral">
+                </div>
 
+                <div class="checkbox-inline">
+                    <label>¿Realiza viaje de ida?</label>
+                    <input type="checkbox" id="checkIda">
+                </div>
+                <div id="idaDiv" style="display:none">
+                    <select name="turno">
+                        <option value="">Turno ida</option>
+                        <option>Mañana</option>
+                        <option>Tarde</option>
+                        <option>Noche</option>
+                    </select>
 
-<!-- DIAS -->
-<div class="check-group">
-<label><input type="checkbox" name="dias" value="Lunes">Lunes</label>
-<label><input type="checkbox" name="dias" value="Martes">Martes</label>
-<label><input type="checkbox" name="dias" value="Miércoles">Miércoles</label>
-<label><input type="checkbox" name="dias" value="Jueves">Jueves</label>
-<label><input type="checkbox" name="dias" value="Viernes">Viernes</label>
-<label><input type="checkbox" name="dias" value="Sábado">Sábado</label>
-</div>
+                    <select name="parada" id="parada">
+                        <option value="">Parada ida</option>
+                    </select>
+                </div>
+                <div class="checkbox-inline">
+                    <label>¿Realiza viaje de vuelta?</label>
+                    <input type="checkbox" id="checkVuelta">
+                </div>
+                <div id="vueltaDiv" style="display:none">
+                    <select name="turno_vuelta">
+                        <option value="">Turno vuelta</option>
+                        <option>Mañana</option>
+                        <option>Tarde</option>
+                        <option>Noche</option>
+                    </select>
 
-<!-- IDA -->
-<label><input type="checkbox" id="checkIda"> Ida</label>
-<div id="idaDiv" style="display:none">
-<select id="turno">
-<option value="">Turno</option>
-<option>Mañana</option>
-<option>Tarde</option>
-<option>Noche</option>
-</select>
+                    <select name="parada_vuelta">
+                        <option value="">Parada vuelta</option>
+                        <option>CUDI</option>
+                        <option>Liniers</option>
+                        <option>Combate</option>
+                        <option>Belgrano</option>
+                        <option>Vuelve por sus propios medios</option>
+                    </select>
+                </div>
 
-<select id="parada"></select>
-</div>
+                <!-- DIAS -->
+                <div class="check-group">
+                    <label><input type="checkbox" name="dias" value="Lunes">Lunes</label>
+                    <label><input type="checkbox" name="dias" value="Martes">Martes</label>
+                    <label><input type="checkbox" name="dias" value="Miércoles">Miércoles</label>
+                    <label><input type="checkbox" name="dias" value="Jueves">Jueves</label>
+                    <label><input type="checkbox" name="dias" value="Viernes">Viernes</label>
+                    <label><input type="checkbox" name="dias" value="Sábado">Sábado</label>
+                </div>
 
-<!-- VUELTA -->
-<label><input type="checkbox" id="checkVuelta"> Vuelta</label>
+                <button class="btn-save">Guardar</button>
+            </form>
 
-<div id="vueltaDiv" style="display:none">
-<select id="turno_vuelta">
-<option value="">Turno</option>
-<option>Mañana</option>
-<option>Tarde</option>
-<option>Noche</option>
-</select>
+            <p id="msg"></p>
+        </div>
 
-<select id="parada_vuelta">
-<option value="">Parada</option>
-<option>CUDI</option>
-<option>Liniers</option>
-<option>Combate</option>
-<option>Belgrano</option>
-<option>Vuelve por sus propios medios</option>
-</select>
-</div>
+        <div class="card">
+            <button onclick="cargarViajes()">Actualizar</button>
+            <div id="listaViajes"></div>
+        </div>
 
-<button class="btn-save">Guardar</button>
-</form>
+        <div class="card">
+            <h3>Login</h3>
+            <input id="user">
+            <input id="pass" type="password">
+            <button onclick="login()">Entrar</button>
+            <p id="loginMsg"></p>
+        </div>
 
-<p id="msg"></p>
-</div>
+    </div>
 
-<div class="card">
-<button onclick="cargarViajes()">Actualizar</button>
-<div id="listaViajes"></div>
-</div>
+    <script>
 
-<div class="card">
-<h3>Login</h3>
-<input id="user">
-<input id="pass" type="password">
-<button onclick="login()">Entrar</button>
-<p id="loginMsg"></p>
-</div>
+        const API_URL = "https://script.google.com/macros/s/AKfycbyGFTMvbp_D32OgRPm3LvyiDA1BtzTTNQ_eqTGs7scXkkahVscmK7cwY3TbcaVvPJRe/exec";
 
-</div>
+        let SESSION = null;
+        let DOCENTES = [];
 
-<script>
+        // 🔥 DATA LOCAL
+        const DATA = {
+            "UNAHUR": ["Obstetricia", "Diseño Industrial", "Alimentos"],
+            "UBA": ["FMED"],
+            "UBA CBC": ["CBC"],
+            "UNPAZ": ["Videojuegos"],
+            "UNTREF": ["Software"],
+            "CUDI": ["Personal"]
+        };
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyGFTMvbp_D32OgRPm3LvyiDA1BtzTTNQ_eqTGs7scXkkahVscmK7cwY3TbcaVvPJRe/exec";
+        const PARADAS = {
+            "Mañana": ["Medicina", "Combate", "General Paz", "Liniers", "Va por sus propios medios"],
+            "Tarde": ["Belgrano", "Combate", "Liniers", "Va por sus propios medios"],
+            "Noche": ["Belgrano", "Combate", "Liniers", "Va por sus propios medios"]
+        };
 
-let SESSION = null;
-let DOCENTES = [];
+        // LOGIN
+        async function login() {
+            let res = await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "login",
+                    user: user.value,
+                    pass: pass.value
+                })
+            });
 
-// 🔥 DATA LOCAL
-const DATA = {
-  "UNAHUR": ["Obstetricia","Diseño Industrial","Alimentos"],
-  "UBA": ["FMED"],
-  "UBA CBC": ["CBC"],
-  "UNPAZ": ["Videojuegos"],
-  "UNTREF": ["Software"],
-  "CUDI": ["Personal"]
-};
+            let data = await res.json();
 
-const PARADAS = {
-  "Mañana":["Medicina","Combate","General Paz","Liniers","Va por sus propios medios"],
-  "Tarde":["Belgrano","Combate","Liniers","Va por sus propios medios"],
-  "Noche":["Belgrano","Combate","Liniers","Va por sus propios medios"]
-};
+            if (data.success) {
+                SESSION = data;
+                loginMsg.innerText = "✔ " + data.rol;
+                cargarViajes();
+            } else {
+                loginMsg.innerText = "Error login";
+            }
+        }
 
-// LOGIN
-async function login(){
-  let res = await fetch(API_URL,{
-    method:"POST",
-    body: JSON.stringify({
-      action:"login",
-      user: user.value,
-      pass: pass.value
-    })
-  });
+        // UNIVERSIDADES
+        function cargarUniversidades() {
+            universidad.innerHTML = "<option value=''>Elegir universidad</option>";
 
-  let data = await res.json();
+            for (let u in DATA) {
+                universidad.innerHTML += `<option>${u}</option>`;
+            }
+        }
 
-  if(data.success){
-    SESSION = data;
-    loginMsg.innerText = "✔ " + data.rol;
-    cargarViajes();
-  } else {
-    loginMsg.innerText = "Error login";
-  }
-}
+        // CARRERAS
+        universidad.onchange = function () {
 
-// UNIVERSIDADES
-function cargarUniversidades(){
-  universidad.innerHTML = "<option value=''>Elegir universidad</option>";
+            // cargar carreras
+            carrera.innerHTML = "<option value=''>Elegir carrera</option>";
 
-  for(let u in DATA){
-    universidad.innerHTML += `<option>${u}</option>`;
-  }
-}
+            (DATA[this.value] || []).forEach(c => {
+                carrera.innerHTML += `<option>${c}</option>`;
+            });
 
-// CARRERAS
-universidad.onchange = function(){
+            // reset docente
+            docente.innerHTML = "<option value=''>Elegir docente</option>";
+        };
 
-  // cargar carreras
-  carrera.innerHTML = "<option value=''>Elegir carrera</option>";
+        // DOCENTES
+        async function cargarDocentes() {
+            let res = await fetch(API_URL + "?action=getDocentes");
+            DOCENTES = await res.json();
 
-  (DATA[this.value] || []).forEach(c=>{
-    carrera.innerHTML += `<option>${c}</option>`;
-  });
+            console.log("DOCENTES cargados:", DOCENTES);
+        }
 
-  // reset docente
-  docente.innerHTML = "<option value=''>Elegir docente</option>";
-};
+        // FILTRAR DOCENTES
+        carrera.onchange = function () {
 
-// DOCENTES
-async function cargarDocentes(){
-  let res = await fetch(API_URL+"?action=getDocentes");
-  DOCENTES = await res.json();
+            if (!DOCENTES.length) {
+                alert("Docentes todavía no cargaron, esperá un segundo...");
+                return;
+            }
 
-  console.log("DOCENTES cargados:", DOCENTES);
-}
+            docente.innerHTML = "<option value=''>Elegir docente</option>";
 
-// FILTRAR DOCENTES
-carrera.onchange = function(){
-
-  if(!DOCENTES.length){
-    alert("Docentes todavía no cargaron, esperá un segundo...");
-    return;
-  }
-
-  docente.innerHTML = "<option value=''>Elegir docente</option>";
-
-  DOCENTES
-    .filter(d => 
-      d.universidad === universidad.value &&
-      d.carrera === carrera.value
-    )
-    .forEach(d=>{
-      docente.innerHTML += `
+            DOCENTES
+                .filter(d =>
+                    d.universidad === universidad.value &&
+                    d.carrera === carrera.value
+                )
+                .forEach(d => {
+                    docente.innerHTML += `
         <option value="${d.nombre}" data-tel="${d.telefono}">
           ${d.nombre}
         </option>`;
-    });
-};
+                });
+        };
 
-// PARADAS
-turno.onchange = function(){
-  parada.innerHTML = "<option value=''>Parada</option>";
+        // PARADAS
+        turno.onchange = function () {
+            parada.innerHTML = "<option value=''>Parada</option>";
 
-  (PARADAS[this.value] || []).forEach(p=>{
-    parada.innerHTML += `<option>${p}</option>`;
-  });
-};
+            (PARADAS[this.value] || []).forEach(p => {
+                parada.innerHTML += `<option>${p}</option>`;
+            });
+        };
 
-// MOSTRAR BLOQUES
-checkIda.onchange = ()=> idaDiv.style.display = checkIda.checked ? "block":"none";
-checkVuelta.onchange = ()=> vueltaDiv.style.display = checkVuelta.checked ? "block":"none";
+        // MOSTRAR BLOQUES
+        checkIda.onchange = () => idaDiv.style.display = checkIda.checked ? "block" : "none";
+        checkVuelta.onchange = () => vueltaDiv.style.display = checkVuelta.checked ? "block" : "none";
 
-// ROLES
-function esAdmin(){
-  return SESSION && SESSION.rol === "admin";
-}
+        // ROLES
+        function esAdmin() {
+            return SESSION && SESSION.rol === "admin";
+        }
 
-function esChofer(){
-  return SESSION && SESSION.rol === "chofer";
-}
+        function esChofer() {
+            return SESSION && SESSION.rol === "chofer";
+        }
 
-// VIAJES COMPLETOS
-async function cargarViajes(){
+        // VIAJES COMPLETOS
+        async function cargarViajes() {
 
-  let res = await fetch(API_URL+"?action=obtenerViajes");
-  let data = await res.json();
+            let res = await fetch(API_URL + "?action=obtenerViajes");
+            let data = await res.json();
 
-  let html = "";
-  let dias = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+            let html = "";
+            let dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-  dias.forEach(dia=>{
+            dias.forEach(dia => {
 
-    let lista = data.filter(v=>v.dia === dia);
+                let lista = data.filter(v => v.dia === dia);
 
-    if(lista.length){
+                if (lista.length) {
 
-      html += `<h3>${dia}</h3>
+                    html += `<h3>${dia}</h3>
       <table>
       <tr>
         <th>Uni</th>
@@ -345,24 +365,24 @@ async function cargarViajes(){
         ${esAdmin() ? "<th>Acciones</th>" : ""}
       </tr>`;
 
-      lista.forEach(v=>{
+                    lista.forEach(v => {
 
-        let autoIda = esChofer()
-          ? `<td onclick="editarAuto('${v.fecha_viaje}','ida',this)">➕</td>`
-          : `<td>${v.auto_ida || "---"}</td>`;
+                        let autoIda = esChofer()
+                            ? `<td onclick="editarAuto('${v.fecha_viaje}','ida',this)">➕</td>`
+                            : `<td>${v.auto_ida || "---"}</td>`;
 
-        let autoVuelta = esChofer()
-          ? `<td onclick="editarAuto('${v.fecha_viaje}','vuelta',this)">➕</td>`
-          : `<td>${v.auto_vuelta || "---"}</td>`;
+                        let autoVuelta = esChofer()
+                            ? `<td onclick="editarAuto('${v.fecha_viaje}','vuelta',this)">➕</td>`
+                            : `<td>${v.auto_vuelta || "---"}</td>`;
 
-        let acciones = esAdmin()
-          ? `<td>
+                        let acciones = esAdmin()
+                            ? `<td>
               <button onclick="editar('${v.fecha_viaje}')">Editar</button>
               <button style="background:red" onclick="eliminar('${v.fecha_viaje}')">X</button>
             </td>`
-          : "";
+                            : "";
 
-        html += `
+                        html += `
         <tr>
           <td>${v.universidad}</td>
           <td>${v.carrera}</td>
@@ -375,122 +395,123 @@ async function cargarViajes(){
           ${autoVuelta}
           ${acciones}
         </tr>`;
-      });
+                    });
 
-      html += "</table>";
-    }
-  });
+                    html += "</table>";
+                }
+            });
 
-  listaViajes.innerHTML = html;
-}
+            listaViajes.innerHTML = html;
+        }
 
-// GUARDAR
-form.onsubmit = async e=>{
-  e.preventDefault();
+        // GUARDAR
+        form.onsubmit = async e => {
+            e.preventDefault();
 
-  let dias = [...document.querySelectorAll("input[name='dias']:checked")].map(x=>x.value);
+            let dias = [...document.querySelectorAll("input[name='dias']:checked")].map(x => x.value);
 
-  if(!dias.length){
-    alert("Seleccioná días");
-    return;
-  }
+            if (!dias.length) {
+                alert("Seleccioná días");
+                return;
+            }
 
-  if(!checkIda.checked && !checkVuelta.checked){
-    alert("Seleccioná ida o vuelta");
-    return;
-  }
+            if (!checkIda.checked && !checkVuelta.checked) {
+                alert("Seleccioná ida o vuelta");
+                return;
+            }
 
-  let doc = docente.options[docente.selectedIndex];
+            let doc = docente.options[docente.selectedIndex];
 
-  if(!doc || !doc.value){
-    alert("Seleccioná docente");
-    return;
-  }
+            if (!doc || !doc.value) {
+                alert("Seleccioná docente");
+                return;
+            }
 
-  let data = {
-    action:"guardarViaje",
-    universidad: universidad.value,
-    carrera: carrera.value,
-    docente_nombre: doc.value,
-    docente_telefono: doc.getAttribute("data-tel"),
-    turno: turno.value,
-    parada: parada.value,
-    turno_vuelta: turno_vuelta.value,
-    parada_vuelta: parada_vuelta.value,
-    cuatrimestral: cuatrimestral.checked,
-    dias: dias
-  };
+            let data = {
+                action: "guardarViaje",
+                universidad: universidad.value,
+                carrera: carrera.value,
+                docente_nombre: doc.value,
+                docente_telefono: doc.getAttribute("data-tel"),
+                turno: turno.value,
+                parada: parada.value,
+                turno_vuelta: turno_vuelta.value,
+                parada_vuelta: parada_vuelta.value,
+                cuatrimestral: cuatrimestral.checked,
+                dias: dias
+            };
 
-  await fetch(API_URL,{
-    method:"POST",
-    body: JSON.stringify(data)
-  });
+            await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(data)
+            });
 
-  msg.innerText = "Guardado ✔";
-  form.reset();
-  idaDiv.style.display="none";
-  vueltaDiv.style.display="none";
+            msg.innerText = "Guardado ✔";
+            form.reset();
+            idaDiv.style.display = "none";
+            vueltaDiv.style.display = "none";
 
-  cargarViajes();
-};
+            cargarViajes();
+        };
 
-// ELIMINAR
-async function eliminar(id){
-  if(!esAdmin()){
-    alert("No autorizado");
-    return;
-  }
+        // ELIMINAR
+        async function eliminar(id) {
+            if (!esAdmin()) {
+                alert("No autorizado");
+                return;
+            }
 
-  await fetch(API_URL,{
-    method:"POST",
-    body: JSON.stringify({
-      action:"eliminarViaje",
-      id
-    })
-  });
+            await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "eliminarViaje",
+                    id
+                })
+            });
 
-  cargarViajes();
-}
+            cargarViajes();
+        }
 
-// PATENTE
-async function editarAuto(id,tipo,celda){
+        // PATENTE
+        async function editarAuto(id, tipo, celda) {
 
-  if(!esChofer()){
-    alert("Solo chofer");
-    return;
-  }
+            if (!esChofer()) {
+                alert("Solo chofer");
+                return;
+            }
 
-  let patente = prompt("Patente");
-  if(!patente) return;
+            let patente = prompt("Patente");
+            if (!patente) return;
 
-  await fetch(API_URL,{
-    method:"POST",
-    body: JSON.stringify({
-      action:"guardarPatente",
-      id,
-      tipo,
-      patente
-    })
-  });
+            await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "guardarPatente",
+                    id,
+                    tipo,
+                    patente
+                })
+            });
 
-  celda.innerText = patente;
-}
+            celda.innerText = patente;
+        }
 
-function editar(id){
-  if(!esAdmin()){
-    alert("No autorizado");
-    return;
-  }
+        function editar(id) {
+            if (!esAdmin()) {
+                alert("No autorizado");
+                return;
+            }
 
-  alert("Después hacemos modal de edición");
-}
+            alert("Después hacemos modal de edición");
+        }
 
-// INIT
-cargarUniversidades();
-cargarDocentes();
-cargarViajes();
+        // INIT
+        cargarUniversidades();
+        cargarDocentes();
+        cargarViajes();
 
-</script>
+    </script>
 
 </body>
+
 </html>
