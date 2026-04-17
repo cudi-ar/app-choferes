@@ -621,8 +621,11 @@
             fin.setDate(inicio.getDate() + 6);
 
             // fecha del viaje (tu formato tipo: "6/4/2026 12:38:01")
-            let partes = v.fecha_viaje.split(" ")[0].split("/");
+            let fechaRaw = v.fecha_viaje || v["Fecha Viaje"];
 
+            if (!fechaRaw) return false;
+
+            let partes = fechaRaw.split(" ")[0].split("/");
             let fechaViaje = new Date(
                 partes[2],        // año
                 partes[1] - 1,    // mes
