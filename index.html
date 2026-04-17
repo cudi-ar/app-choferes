@@ -602,7 +602,7 @@
         function debeMostrarse(v) {
 
             // 1. CUATRIMESTRAL
-            let cuatri = (v.cuatrimestral ?? "").toString().trim().toUpperCase();
+            let cuatri = (v.tipo ?? "").toString().trim().toUpperCase();
 
             console.log(v.cuatrimestral);
 
@@ -660,7 +660,6 @@
                     console.log(v);
                     // console.log(diaRaw);
                     return diaRaw === diaBuscado && debeMostrarse(v);
-
                 });
 
                 // console.log("Día:", dia, "→", lista); // ✅ acá sí funciona
