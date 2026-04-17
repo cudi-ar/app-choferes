@@ -657,7 +657,7 @@
 
                     let diaRaw = (v.dia ?? v["Día"] ?? v.Dia ?? "").toString().trim().toLowerCase();
                     let diaBuscado = dia.toLowerCase();
-                    // console.log(v);
+                    console.log(v);
                     // console.log(diaRaw);
                     return diaRaw === diaBuscado && debeMostrarse(v);
 
@@ -800,7 +800,6 @@
                 cuatrimestral: cuatrimestral.checked ? "SI" : "NO",
                 dias: dias
             };
-            console.log(data);
 
             // 9. ENVÍO
             await fetch(API_URL, {
