@@ -605,7 +605,11 @@
         function debeMostrarse(v) {
 
             // 🟣 CUATRIMESTRAL → siempre
-            if (v.cuatrimestral === "SI") {
+            if (
+                v.cuatrimestral === true ||
+                v.cuatrimestral === "SI" ||
+                v["Cuatrimestral"] === "SI"
+            ) {
                 return true;
             }
 
@@ -621,7 +625,11 @@
             fin.setDate(inicio.getDate() + 6);
 
             // parsear fecha (formato: dd/mm/yyyy ...)
-            let partes = v.fecha_viaje.split(" ")[0].split("/");
+            let fechaRaw = v.fecha_viaje || v["Fecha Viaje"];
+
+            if (!fechaRaw) return false;
+
+            let partes = fechaRaw.split(" ")[0].split("/");
 
             let fechaViaje = new Date(
                 partes[2],       // año
@@ -634,11 +642,11 @@
 
         // VIAJES COMPLETOS
         async function cargarViajes() {
+            console.log("Filtrados:", lista);
 
             let res = await fetch(API_URL + "?action=obtenerViajes");
             let data = await res.json();
 
-            console.log("VIAJES:", data);
             let html = "";
             let dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
