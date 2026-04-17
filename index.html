@@ -603,7 +603,11 @@
 
             // 1. CUATRIMESTRAL
             let cuatri = (v.cuatrimestral ?? "").toString().trim().toUpperCase();
-            if (cuatri === "SI") return true;
+
+            // acepta todos los formatos posibles
+            if (cuatri === "SI" || cuatri === "TRUE" || cuatri === "YES" || cuatri === "1") {
+                return true;
+            }
 
             // 2. fecha inválida fallback
             if (!v.fecha_viaje) return true;
