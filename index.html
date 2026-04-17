@@ -604,12 +604,35 @@
 
         function debeMostrarse(v) {
 
-            if (v.cuatrimestral === "SI" || v.cuatrimestral === true || v.cuatrimestral === "true") {
-                return true;
+            if (!v) return false;
+
+            // 🔥 normalizar cuatrimestral
+            let cuatri = String(v.cuatrimestral).toUpperCase().trim();
+
+            let esCuatrimestral = cuatri === "SI" || cuatri === "TRUE" || cuatri === "1";
+            let esNoCuatrimestral = cuatri === "NO" || cuatri === "FALSE" || cuatri === "0";
+
+            // 1. SI es cuatrimestral → siempre mostrar
+            if (esCuatrimestral) return true;
+
+            // 2. SI es NO → SIEMPRE debe pasar por filtro de fecha
+            if (esNoCuatrimestral) {
+                if (!v.fecha_viaje) return false;
             }
 
-            if (!v.fecha_viaje) return true; // fallback para no romper
+            // 3. seguridad de fecha
+            if (!v.fecha_viaje) return false;
 
+            let fechaStr = v.fecha_viaje.split(" ")[0];
+            let partes = fechaStr.split("/");
+
+            if (partes.length !== 3) return false;
+
+            let fechaViaje = new Date(partes[2], partes[1] - 1, partes[0]);
+
+            if (isNaN(fechaViaje)) return false;
+
+            // 4. semana próxima
             let hoy = new Date();
 
             let inicio = new Date(hoy);
@@ -617,17 +640,6 @@
 
             let fin = new Date(inicio);
             fin.setDate(inicio.getDate() + 6);
-
-            let fechaStr = v.fecha_viaje.split(" ")[0];
-            let partes = fechaStr.split("/");
-
-            if (partes.length !== 3) return true;
-
-            let fechaViaje = new Date(
-                partes[2],
-                partes[1] - 1,
-                partes[0]
-            );
 
             return fechaViaje >= inicio && fechaViaje <= fin;
         }
