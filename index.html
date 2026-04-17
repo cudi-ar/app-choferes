@@ -604,12 +604,23 @@
 
         function debeMostrarse(v) {
 
-            if (v.cuatrimestral === "SI" || v.cuatrimestral === true || v.cuatrimestral === "true") {
-                return true;
-            }
+            let esCuatrimestral =
+                v.cuatrimestral === "SI" ||
+                v.cuatrimestral === true ||
+                v.cuatrimestral === "true";
 
-            if (!v.fecha_viaje) return true; // fallback para no romper
+            let esNoCuatrimestral =
+                v.cuatrimestral === "NO" ||
+                v.cuatrimestral === false ||
+                v.cuatrimestral === "false";
 
+            // 1. CUATRIMESTRAL → siempre visible
+            if (esCuatrimestral) return true;
+
+            // 2. SIN FECHA → NO mostrar (importante)
+            if (!v.fecha_viaje) return false;
+
+            // 3. calcular semana próxima
             let hoy = new Date();
 
             let inicio = new Date(hoy);
@@ -621,7 +632,7 @@
             let fechaStr = v.fecha_viaje.split(" ")[0];
             let partes = fechaStr.split("/");
 
-            if (partes.length !== 3) return true;
+            if (partes.length !== 3) return false;
 
             let fechaViaje = new Date(
                 partes[2],
@@ -629,6 +640,7 @@
                 partes[0]
             );
 
+            // 4. SOLO NO CUATRIMESTRAL entra por semana
             return fechaViaje >= inicio && fechaViaje <= fin;
         }
 
