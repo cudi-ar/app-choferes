@@ -10,6 +10,7 @@
             background: #f5f7fb;
             margin: 0;
             padding: 10px;
+            overflow-x: hidden;
         }
 
         .header {
@@ -94,6 +95,7 @@
         .table-container {
             width: 100%;
             overflow-x: auto;
+            overflow-y: hidden;
         }
 
         table {
@@ -102,14 +104,15 @@
             margin-top: 10px;
             min-width: 900px;
         }
-        .table-container::-webkit-scrollbar {
-    height: 6px;
-}
 
-.table-container::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 10px;
-}
+        .table-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
 
         th,
         td {
@@ -228,6 +231,26 @@
         }
 
         @media (max-width: 600px) {
+
+            table {
+                min-width: 700px;
+                /* 🔥 bajamos de 900 */
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            th,
+            td {
+                font-size: 12px;
+                padding: 4px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
 
             table {
                 display: block;
