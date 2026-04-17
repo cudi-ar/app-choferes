@@ -604,40 +604,33 @@
 
         function debeMostrarse(v) {
 
-    // 🔥 seguridad total
-    if (!v) return false;
+            if (v.cuatrimestral === "SI" || v.cuatrimestral === true || v.cuatrimestral === "true") {
+                return true;
+            }
 
-    let cuatri = String(v.cuatrimestral).toUpperCase();
+            if (!v.fecha_viaje) return true; // fallback para no romper
 
-    let esCuatrimestral = cuatri === "SI" || cuatri === "TRUE" || cuatri === "1";
+            let hoy = new Date();
 
-    // 1. cuatrimestral → siempre visible
-    if (esCuatrimestral) return true;
+            let inicio = new Date(hoy);
+            inicio.setDate(hoy.getDate() - hoy.getDay() + 8);
 
-    // 2. si no hay fecha → mejor NO mostrar (evita basura)
-    if (!v.fecha_viaje) return false;
+            let fin = new Date(inicio);
+            fin.setDate(inicio.getDate() + 6);
 
-    // 3. parse seguro
-    let fechaBase = v.fecha_viaje.split(" ")[0];
-    let partes = fechaBase.split("/");
+            let fechaStr = v.fecha_viaje.split(" ")[0];
+            let partes = fechaStr.split("/");
 
-    if (partes.length !== 3) return false;
+            if (partes.length !== 3) return true;
 
-    let fechaViaje = new Date(partes[2], partes[1] - 1, partes[0]);
+            let fechaViaje = new Date(
+                partes[2],
+                partes[1] - 1,
+                partes[0]
+            );
 
-    if (isNaN(fechaViaje.getTime())) return false;
-
-    // 4. rango semana próxima
-    let hoy = new Date();
-
-    let inicio = new Date(hoy);
-    inicio.setDate(hoy.getDate() - hoy.getDay() + 8);
-
-    let fin = new Date(inicio);
-    fin.setDate(inicio.getDate() + 6);
-
-    return fechaViaje >= inicio && fechaViaje <= fin;
-}
+            return fechaViaje >= inicio && fechaViaje <= fin;
+        }
 
         // VIAJES COMPLETOS
         async function cargarViajes() {
