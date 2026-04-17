@@ -603,7 +603,7 @@
         }
 
         function debeMostrarse(v) {
-
+            console.log("CLAVES:", Object.keys(data[0]));
             // 🟣 CUATRIMESTRAL → siempre
             if ((v.cuatrimestral || v["Cuatrimestral"]) === "SI") {
                 return true;
