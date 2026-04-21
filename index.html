@@ -399,7 +399,7 @@
                     <label><input type="checkbox" name="dias" value="Sábado">Sábado</label>
                 </div>
 
-                <button class="btn-save">Guardar</button>
+                <button type="submit" class="btn-save">Guardar</button>
             </form>
 
             <p id="msg"></p>
@@ -411,20 +411,21 @@
         </div>
 
         <div class="card">
-            <h2>Iniciar Sesion</h>
+            <h2>Iniciar Sesion</h2>
 
-                <p style="text-align:left; font-size:14px; color:#555;">
-                    Inicia sesion para ingresar patente.<br><br>
-                    • En caso de no tener un usuario/contraseña comunicarse con cudisoporte@gmail.com<br>
-                </p>
+            <p style="text-align:left; font-size:14px; color:#555;">
+                Inicia sesion para ingresar patente.<br><br>
+                • En caso de no tener un usuario/contraseña comunicarse con cudisoporte@gmail.com<br>
+            </p>
 
-                <div class="login-form">
-                    <input id="user" type="text" placeholder="Usuario">
-                    <input id="pass" type="password" placeholder="Contraseña">
-                    <button onclick="login()">Entrar</button>
-                </div>
+            <form id="loginForm" class="login-form">
+                <input id="user" type="text" placeholder="Usuario" autocomplete="username" enterkeyhint="next">
+                <input id="pass" type="password" placeholder="Contraseña" autocomplete="current-password"
+                    enterkeyhint="done">
+                <button type="submit">Entrar</button>
+            </form>
 
-                <p id="loginMsg"></p>
+            <p id="loginMsg"></p>
         </div>
 
     </div>
@@ -674,9 +675,9 @@
                                 <th>Carrera</th>
                                 <th>Docente</th>
                                 <th>Ida</th>
-                                <th>Horario Ida</th>
+                                <th>Hora Ida</th>
                                 <th>Vuelta</th>
-                                <th>Horario Vuelta</th>
+                                <th>Hora Vuelta</th>
                                 <th>Auto Ida</th>
                                 <th>Auto Vuelta</th>
                                 ${esAdmin() ? "<th>Acciones</th>" : ""}
@@ -865,6 +866,10 @@
 
             alert("Después hacemos modal de edición");
         }
+        document.getElementById("loginForm").onsubmit = async function(e) {
+    e.preventDefault();
+    await login();
+};
 
         // INIT
         cargarUniversidades();
