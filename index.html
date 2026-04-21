@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://raw.githubusercontent.com/gonzab1/app-choferes/main/cudi.png" type="image/png">
     <style>
         body {
             font-family: Arial;
@@ -423,8 +424,6 @@
 
                 <button type="submit" class="btn-save">Guardar</button>
             </form>
-
-            <p id="msg"></p>
         </div>
 
         <div class="card">
@@ -823,8 +822,6 @@
 
                 idaDiv.style.display = "none";
                 vueltaDiv.style.display = "none";
-
-                msg.innerText = "Guardado ✔";
 
                 // 🔥 RECARGAR TABLA ESPERANDO
                 await cargarViajes();
