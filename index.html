@@ -218,6 +218,10 @@
             margin: 0 auto 10px;
         }
 
+        input.error {
+            border: 1px solid red;
+        }
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -469,7 +473,12 @@
         const turno_vuelta = document.querySelector('[name="turno_vuelta"]');
         const parada_vuelta = document.querySelector('[name="parada_vuelta"]');
         const cuatrimestral = document.querySelector('[name="cuatrimestral"]');
-
+        [user, pass].forEach(input => {
+            input.addEventListener("input", () => {
+                input.classList.remove("error");
+                loginMsg.innerText = "";
+            });
+        });
         // 🔥 DATA LOCAL
         const DATA = {
             "UNAHUR": ["Obstetricia", "Diseño Industrial", "Alimentos"],
@@ -485,42 +494,6 @@
             "Tarde": ["Belgrano", "Combate", "Liniers", "Va por su medio"],
             "Noche": ["Belgrano", "Combate", "Liniers", "Va por su medio"]
         };
-
-        // LOGIN
-        async function login() {
-
-            showLoading("Iniciando sesión...");
-
-            try {
-                let res = await fetch(API_URL, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        action: "login",
-                        user: user.value,
-                        pass: pass.value
-                    })
-                });
-
-                let data = await res.json();
-
-                if (data.success) {
-                    SESSION = data;
-
-                    loginMsg.innerText = "✔ Sesión iniciada (" + data.rol + ")";
-
-                    showLoading("Cargando viajes...");
-                    await cargarViajes();
-
-                } else {
-                    loginMsg.innerText = "Usuario o contraseña incorrectos";
-                }
-
-            } catch (err) {
-                loginMsg.innerText = "Error de conexión";
-            }
-
-            hideLoading();
-        }
 
         // UNIVERSIDADES
         function cargarUniversidades() {
@@ -866,10 +839,72 @@
 
             alert("Después hacemos modal de edición");
         }
-        document.getElementById("loginForm").onsubmit = async function(e) {
-    e.preventDefault();
-    await login();
-};
+        document.getElementById("loginForm").onsubmit = async function (e) {
+            e.preventDefault();
+
+            let u = user.value.trim();
+            let p = pass.value.trim();
+
+            // limpiar estados previos
+            loginMsg.innerText = "";
+            user.classList.remove("error");
+            pass.classList.remove("error");
+
+            // VALIDACIONES
+            if (!u) {
+                loginMsg.innerText = "Ingresá el usuario";
+                user.classList.add("error");
+                user.focus();
+                return;
+            }
+
+            if (!p) {
+                loginMsg.innerText = "Ingresá la contraseña";
+                pass.classList.add("error");
+                pass.focus();
+                return;
+            }
+
+            if (p.length < 4) {
+                loginMsg.innerText = "La contraseña es muy corta";
+                pass.classList.add("error");
+                pass.focus();
+                return;
+            }
+
+            try {
+                showLoading("Iniciando sesión...");
+
+                let res = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "login",
+                        user: u,
+                        pass: p
+                    })
+                });
+
+                let data = await res.json();
+
+                if (data.success) {
+                    SESSION = data;
+
+                    loginMsg.innerText = "✔ Sesión iniciada (" + data.rol + ")";
+
+                    showLoading("Cargando viajes...");
+                    await cargarViajes();
+
+                } else {
+                    loginMsg.innerText = "Usuario o contraseña incorrectos";
+                    pass.classList.add("error");
+                }
+
+            } catch (err) {
+                loginMsg.innerText = "Error de conexión";
+            }
+
+            hideLoading();
+        };
 
         // INIT
         cargarUniversidades();
