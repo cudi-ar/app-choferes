@@ -161,7 +161,7 @@
         .header-title {
             display: flex;
             align-items: center;
-            justify-content: left;
+            justify-content: space-between;
         }
 
         .logo {
@@ -347,7 +347,7 @@
         <div class="card">
             <div class="header-title">
                 <h2>Cargar viaje</h2>
-                <img src="https://raw.githubusercontent.com/gonzab1/app-choferes/main/logo.png" class="logo">
+                <img src="https://raw.githubusercontent.com/gonzab1/app-choferes/main/cudi.png" class="logo">
             </div>
             <p style="text-align:left; font-size:14px; color:#555;">
                 Complete este formulario para registrar su viaje semanal de remis.<br><br>
@@ -811,6 +811,7 @@
 
         // ELIMINAR
         async function eliminar(id) {
+            console.log("ELIMINAR ID:", id);
             if (!esAdmin()) {
                 alert("No autorizado");
                 return;
