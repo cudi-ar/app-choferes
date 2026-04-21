@@ -222,6 +222,23 @@
             border: 1px solid red;
         }
 
+        .acciones {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-accion {
+            width: auto;
+            /* 🔥 rompe el 100% */
+            padding: 6px 10px;
+            font-size: 12px;
+            min-height: auto;
+        }
+
+        .btn-delete {
+            background: red;
+        }
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -670,9 +687,9 @@
                             : `<td>${v.auto_vuelta || "---"}</td>`;
 
                         let acciones = esAdmin()
-                            ? `<td>
-              <button onclick="editar('${v.fecha_viaje}')">Editar</button>
-              <button style="background:red" onclick="eliminar('${v.fecha_viaje}')">X</button>
+                            ? `<td class='acciones'>
+              <button class='btn-accion' onclick="editar('${v.fecha_viaje}')">Editar</button>
+              <button class='btn-accion btn-delete' onclick="eliminar('${v.fecha_viaje}')">X</button>
             </td>`
                             : "";
 
