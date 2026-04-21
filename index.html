@@ -715,23 +715,20 @@
             listaViajes.innerHTML = html;
         }
 
-        // GUARDAR
         form.onsubmit = async e => {
             e.preventDefault();
 
-            // 1. UNIVERSIDAD
+            // VALIDACIONES
             if (!universidad.value) {
                 alert("Seleccioná universidad");
                 return;
             }
 
-            // 2. CARRERA
             if (!carrera.value) {
                 alert("Seleccioná carrera");
                 return;
             }
 
-            // 3. DOCENTE
             let doc = docente.options[docente.selectedIndex];
 
             if (!doc || !doc.value) {
@@ -739,39 +736,33 @@
                 return;
             }
 
-            // 4. IDA / VUELTA
             if (!checkIda.checked && !checkVuelta.checked) {
                 alert("Seleccioná ida o vuelta");
                 return;
             }
 
-            // 5. VALIDACIONES IDA
             if (checkIda.checked) {
                 if (!turno.value) {
                     alert("Seleccioná turno de ida");
                     return;
                 }
-
                 if (!parada.value) {
                     alert("Seleccioná parada de ida");
                     return;
                 }
             }
 
-            // 6. VALIDACIONES VUELTA
             if (checkVuelta.checked) {
                 if (!turno_vuelta.value) {
                     alert("Seleccioná turno de vuelta");
                     return;
                 }
-
                 if (!parada_vuelta.value) {
                     alert("Seleccioná parada de vuelta");
                     return;
                 }
             }
 
-            // 7. DIAS
             let dias = [...document.querySelectorAll("input[name='dias']:checked")].map(x => x.value);
 
             if (!dias.length) {
@@ -779,7 +770,7 @@
                 return;
             }
 
-            // 8. DATA FINAL
+            // DATA
             let data = {
                 action: "guardarViaje",
                 universidad: universidad.value,
@@ -794,38 +785,74 @@
                 dias: dias
             };
 
-            // 9. ENVÍO
-            await fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(data)
-            });
+            try {
+                // 🔥 LOADING
+                showLoading("Guardando viaje...");
 
-            // 10. RESET
-            msg.innerText = "Guardado ✔";
-            form.reset();
-            idaDiv.style.display = "none";
-            vueltaDiv.style.display = "none";
+                let res = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                });
 
-            cargarViajes();
+                let result = await res.json(); // 👈 IMPORTANTE esperar respuesta
+
+                console.log("Respuesta guardar:", result);
+
+                // ✅ RESET COMPLETO
+                form.reset();
+
+                // reset manual de selects dinámicos
+                carrera.innerHTML = "<option value=''>Elegir carrera</option>";
+                docente.innerHTML = "<option value=''>Elegir docente</option>";
+                parada.innerHTML = "<option value=''>Parada ida</option>";
+                parada_vuelta.selectedIndex = 0;
+
+                idaDiv.style.display = "none";
+                vueltaDiv.style.display = "none";
+
+                msg.innerText = "Guardado ✔";
+
+                // 🔥 RECARGAR TABLA ESPERANDO
+                await cargarViajes();
+
+            } catch (err) {
+                console.error(err);
+                msg.innerText = "Error al guardar";
+            }
+
+            hideLoading();
         };
 
         // ELIMINAR
         async function eliminar(id) {
             console.log("ELIMINAR ID:", id);
+
             if (!esAdmin()) {
                 alert("No autorizado");
                 return;
             }
 
-            await fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    action: "eliminarViaje",
-                    id
-                })
-            });
+            if (!confirm("¿Seguro que querés eliminar este viaje?")) return;
 
-            cargarViajes();
+            try {
+                showLoading("Eliminando viaje..."); // 👈 MOSTRAR MODAL
+
+                await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "eliminarViaje",
+                        id
+                    })
+                });
+
+                await cargarViajes();
+
+            } catch (err) {
+                alert("Error al eliminar");
+                console.error(err);
+            }
+
+            hideLoading(); // 👈 OCULTAR MODAL
         }
 
         // PATENTE
